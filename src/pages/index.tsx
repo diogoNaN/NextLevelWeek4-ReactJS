@@ -1,5 +1,7 @@
 import Head from "next/head";
+import { GetServerSideProps } from "next";
 
+import { ChallengesProvider } from "../contexts/ChallengeContext";
 import { CountdownProvider } from "../contexts/CountdownContext";
 
 import { ExperienceBar } from "../components/ExperienceBar";
@@ -10,34 +12,65 @@ import { ChallengeBox } from "../components/ChallengeBox";
 
 import styles from '../styles/pages/Home.module.css';
 
-export default function Home() {
+interface HomeProps {
+  level: number,
+  currentExperience: number,
+  challengesCompleted: number,
+}
+
+export default function Home<HomeProps>(props) {
   return (
-    <div className={styles.container}>
-      
-      <Head>
-        <title>Início | move.it</title>
-      </Head>
+    <ChallengesProvider
+      level={props.level}
+      currentExperience={props.currentExperience}
+      challengesCompleted={props.challengesCompleted}
+    >
 
-      <ExperienceBar />
+      <div className={styles.container}>
+        
+        <Head>
+          <title>Início | move.it</title>
+        </Head>
 
-      <CountdownProvider>
+        <ExperienceBar />
 
-        <section>
+        <CountdownProvider>
 
-          <div>
-            <Profile />
-            <CompletedChallenges />
-            <Countdown />
-          </div>
+          <section>
 
-          <div>
-            <ChallengeBox />
-          </div>
+            <div>
+              <Profile />
+              <CompletedChallenges />
+              <Countdown />
+            </div>
 
-        </section>
+            <div>
+              <ChallengeBox />
+            </div>
 
-      </CountdownProvider>
+          </section>
 
-    </div>
+        </CountdownProvider>
+
+      </div>
+
+    </ChallengesProvider>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  
+  const {
+    level,
+    currentExperience,
+    challengesCompleted,
+  } = context.req.cookies;
+
+  return {
+    props: {
+      level: Number(level),
+      currentExperience: Number(currentExperience),
+      challengesCompleted: Number(challengesCompleted),
+    }
+  }
 }

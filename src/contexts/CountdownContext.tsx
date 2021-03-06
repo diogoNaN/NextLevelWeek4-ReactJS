@@ -22,7 +22,7 @@ const CountdownProvider = ({ children }: CountdownProviderProps) => {
 
   const { startNewChallenge } = useContext(ChallengesContext);
 
-  const waitTimeMinutes = 0.05
+  const waitTimeMinutes = 25
 
   const [time, setTime] = useState(waitTimeMinutes * 60);
   const [isActive, setIsActive] = useState(false);

@@ -61,7 +61,7 @@ const ChallengeBox = () => {
         </div>
       ) : (
         <div className={styles.challengeNotActive}>
-          <strong>FInalize um ciclo para receber um desafio</strong>
+          <strong>Finalize um ciclo para receber um desafio</strong>
           <p>
             <img src="icons/level-up.svg" alt="Level Up"/>
             Suba de nível completando desafios...
